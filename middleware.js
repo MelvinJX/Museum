@@ -1,5 +1,6 @@
 const { isValidObjectId } = require("mongoose");
 const { oeuvreSchemaJoi } = require("./verif");
+const JWT = require("jsonwebtoken");
 
 function idValidMDB(request, response, next){
     const id = request.params.id;
@@ -18,5 +19,29 @@ function isValidOeuvre(request, response, next){
     next();
 }
 
+function isLogged(request, response, next){
+    const token = request.header("x-token");
+
+    if(!token) return response.status(401).json({Message : "Veuillez vous connecter pour réaliser cette opération."});
+
+    try{
+        const payload = JWT.verify(token, process.env.PRIVATE_KEY);
+        request.user = payload;
+
+        next();
+    }
+    catch(ex){
+        response.status(400).json({Message : "JWT invalide"});
+    }
+}
+
+function isAdmin(request, response, next){
+    if(request.user.role !== "admin") return response.status(401).json({Message : "Autorisation refusée."});
+
+    next();
+}
+
 module.exports.idValidMDB = idValidMDB;
 module.exports.isValidOeuvre = isValidOeuvre;
+module.exports.isLogged = isLogged;
+module.exports.isAdmin = isAdmin;

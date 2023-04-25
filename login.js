@@ -29,7 +29,7 @@ route.post("/", async (request, response) => {
 
     const token = JWT.sign(profil, process.env.PRIVATE_KEY);
 
-    response.json({Message : `Bienvenue ${profil.email}`, token : token});
+    response.json({Message : `Bienvenue ${profil.email}`, token : token, role : profil.role});
 })
 
 module.exports = route;
