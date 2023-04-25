@@ -1,7 +1,7 @@
 const { isValidObjectId } = require("mongoose");
 const { oeuvreSchemaJoi } = require("./verif");
 
-function idValid(request, response, next){
+function idValidMDB(request, response, next){
     const id = request.params.id;
 
     if(!isValidObjectId(id)) return response.status(400).json({Message : `L'id ${id} n'est pas valide pour MongoDB !`});
@@ -18,5 +18,5 @@ function isValidOeuvre(request, response, next){
     next();
 }
 
-module.exports.idValid = idValid;
+module.exports.idValidMDB = idValidMDB;
 module.exports.isValidOeuvre = isValidOeuvre;

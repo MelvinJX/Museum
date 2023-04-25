@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { Oeuvre } = require("./model");
-const { idValid, isValidOeuvre } = require("./middleware");
+const { idValidMDB, isValidOeuvre, idValidMDB } = require("./middleware");
 
 const route = Router();
 
@@ -31,7 +31,7 @@ route.post("/", isValidOeuvre, (request, response) => {
     response.json(newOeuvre);
 });
 
-route.delete("/:id",idValid ,async (request, response) => {
+route.delete("/:id",idValidMDB ,async (request, response) => {
     const id = request.params.id;
     const oeuvreToDelete = await Oeuvre.findByIdAndRemove(id);
 
@@ -40,7 +40,7 @@ route.delete("/:id",idValid ,async (request, response) => {
     response.json({Message : `L'article avec l'identifiant ${id} a bien été supprimé.`});
 })
 
-route.put("/:id", [idValid, isValidOeuvre], async (request, response) => {
+route.put("/:id", [idValidMDB, isValidOeuvre], async (request, response) => {
     const id = request.params.id;
     const { body } = request;
 
