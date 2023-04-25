@@ -46,11 +46,12 @@ route.delete("/:id",idValid ,async (request, response) => {
 
 route.put("/:id", idValid, async (request, response) => {
     const id = request.params.id;
+    const { body } = request;
 
     const { error } = oeuvreSchemaJoi.validate(body, { abortEarly : false });
     if(error) return response.status(400).json(error.details);
 
-    const oeuvreToUpdate = Oeuvre.findByIdAndUpdate(id, { $set : body }, { new : true });
+    const oeuvreToUpdate = await Oeuvre.findByIdAndUpdate(id, { $set : body }, { new : true });
     if(!oeuvreToUpdate) return response.status(404).json({Message : `L'article avec l'id ${id} n'existe pas.`});
 
     response.json(oeuvreToUpdate);
