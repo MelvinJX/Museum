@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const { Oeuvre } = require("./model");
-const { oeuvreSchemaJoi } = require("./verif");
-const { idValid } = require("./middleware");
+const { idValid, isValidOeuvre } = require("./middleware");
 
 const route = Router();
 
@@ -24,11 +23,8 @@ route.get("/:id", async (request, response) => {
     response.json(oeuvreToFind);
 });
 
-route.post("/", (request, response) => {
+route.post("/", isValidOeuvre, (request, response) => {
     const { body } = request;
-
-    const { error } = oeuvreSchemaJoi.validate(body, { abortEarly : false });
-    if(error) return response.status(400).json(error.details);
 
     const newOeuvre = new Oeuvre(body);
     newOeuvre.save();
@@ -44,12 +40,9 @@ route.delete("/:id",idValid ,async (request, response) => {
     response.json({Message : `L'article avec l'identifiant ${id} a bien été supprimé.`});
 })
 
-route.put("/:id", idValid, async (request, response) => {
+route.put("/:id", [idValid, isValidOeuvre], async (request, response) => {
     const id = request.params.id;
     const { body } = request;
-
-    const { error } = oeuvreSchemaJoi.validate(body, { abortEarly : false });
-    if(error) return response.status(400).json(error.details);
 
     const oeuvreToUpdate = await Oeuvre.findByIdAndUpdate(id, { $set : body }, { new : true });
     if(!oeuvreToUpdate) return response.status(404).json({Message : `L'article avec l'id ${id} n'existe pas.`});
