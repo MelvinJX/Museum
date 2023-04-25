@@ -14,5 +14,11 @@ const userSchemaJoi = Joi.object({
     role : Joi.string().valid("visiteur","admin")
 })
 
+const loginSchemaJoi = Joi.object({
+    email : Joi.string().min(2).max(255).required(),
+    password : Joi.string().regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,255}$/).required()
+})
+
 module.exports.oeuvreSchemaJoi = oeuvreSchemaJoi;
 module.exports.userSchemaJoi = userSchemaJoi;
+module.exports.loginSchemaJoi = loginSchemaJoi;

@@ -1,6 +1,7 @@
 const express = require("express");
 const route = require("./route");
 const userRoute = require("./route-user");
+const loginRoute = require("./login")
 const { connect } = require("mongoose");
 require("dotenv").config();
 
@@ -16,5 +17,6 @@ const app = express();
 app.use(express.json()); // ce middleware à mettre avant les autres middleware
 app.use("/oeuvre", route);
 app.use("/user", userRoute);
+app.use("/login", loginRoute);
 
 app.listen(PORT , () => console.log(`Express start sur port : ${PORT}`));
