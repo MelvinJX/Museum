@@ -4,7 +4,7 @@ import { ProfilContext } from '../contexts/profilContext';
 
 const Connexion = ({navigation}) => {
 
-    const { setBackData, setJWT } = useContext(ProfilContext);
+    const { setBackData, setJWT, setRole } = useContext(ProfilContext);
 
     const [ email, setEmail ] = useState("test@gmail.com");
     const [ password, setPassword ] = useState("Password0000");
@@ -18,6 +18,7 @@ const Connexion = ({navigation}) => {
           console.log(data)
           setBackData(data)
           setJWT(data.token)
+          setRole(data.role)
       })
     }
 

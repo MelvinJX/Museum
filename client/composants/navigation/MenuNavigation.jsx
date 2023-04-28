@@ -14,15 +14,18 @@ import { ProfilContext } from "../../contexts/profilContext";
 const Menu = createBottomTabNavigator();
 
 const MenuNavigation = () => {
-  const { backData, JWT, setJWT } = useContext(ProfilContext);
+  const { backData, JWT, setJWT, role } = useContext(ProfilContext);
 
   return (
     <NavigationContainer>
       { JWT 
         &&
-        <Pressable style={styles.deconnexion} onPress={() => setJWT("")}>
-          <Text style={styles.deconnexionText}>Déconnexion</Text>
-        </Pressable>
+        <View style={styles.headerContainer}>
+          <Pressable style={styles.deconnexion} onPress={() => setJWT("")}>
+            <Text style={styles.headerText}>Déconnexion</Text>
+          </Pressable>
+          <Text style={[styles.headerText, {marginVertical: "8px"}]}>Status : {role}</Text>
+        </View>
       }
 
         <Menu.Navigator screenOptions={{
@@ -45,6 +48,9 @@ const MenuNavigation = () => {
 export default MenuNavigation
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    alignSelf: "flex-end"
+  },
   deconnexion: {
     backgroundColor: "red",
     width: "200px",
@@ -52,9 +58,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderRadius: "4px",
     margin: "10px",
-    alignSelf: "flex-end"
   },
-  deconnexionText: {
+  headerText: {
     color: "white",
     fontWeight: "700"
   }
