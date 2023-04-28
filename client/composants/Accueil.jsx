@@ -17,16 +17,6 @@ const Accueil = () => {
       })
   }, [recherche, backData])
 
-
-  const deleteOeuvre = (id) => {
-    console.log(id)
-    fetch(`http://localhost:4010/oeuvre/${id}`, {method:"delete"})
-      .then(response => response.json())
-      .then(data => {
-        setBackData(data)
-      })
-  }
-
   return (
     <View style={styles.box}>
       { recherche == "oeuvre/all" 

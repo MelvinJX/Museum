@@ -1,4 +1,4 @@
-import { View, Text, Button, TextInput } from 'react-native'
+import { View, Text, Button, TextInput, StyleSheet, Pressable } from 'react-native'
 import React, { useEffect, useState, useContext } from 'react'
 import { ProfilContext } from '../contexts/profilContext';
 
@@ -22,13 +22,45 @@ const Connexion = ({navigation}) => {
     }
 
   return (
-    <View>
-      <Button title="Retourner à l'accueil" onPress={() => {navigation.navigate("Accueil")}}/>
-      <TextInput value={email} onChangeText={(userValue) => setEmail(userValue)} placeholder="E-mail" style={{borderWidth: "1px", margin: "10px"}}/>
-      <TextInput value={password} onChangeText={(userValue) => setPassword(userValue)} placeholder="Mot de passe" style={{borderWidth: "1px", margin: "10px"}}/>
-      <Button title="Soumettre" onPress={submit}/>
+    <View style={styles.container}>
+      {/* <Button title="Retourner à l'accueil" onPress={() => {navigation.navigate("Accueil")}}/> */}
+      <Text>E-mail</Text>
+      <TextInput value={email} onChangeText={(userValue) => setEmail(userValue)} placeholder="E-mail" style={styles.textInput}/>
+      <Text>Mot de passe</Text>
+      <TextInput value={password} onChangeText={(userValue) => setPassword(userValue)} placeholder="Mot de passe" style={styles.textInput}/>
+      <Pressable style={styles.button} onPress={submit}>
+        <Text style={styles.textButton} >Soumettre</Text>
+      </Pressable>
     </View>
   )
 }
 
 export default Connexion
+
+const styles = StyleSheet.create({
+  container: {
+    width: "24%",
+    margin: "auto",
+  },
+  textInput: {
+    borderWidth: "1px",
+    borderColor: "black",
+    borderRadius: "4px",
+    marginBottom: "10px",
+    padding: "8px"
+  },
+  button: {
+    padding: "8px",
+    backgroundColor: "red",
+    alignSelf: "flex-start",
+    borderRadius: "4px",
+    margin: "auto",
+    marginTop: "10px",
+    width: "50%"
+  },
+  textButton: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "500"
+  }
+})
